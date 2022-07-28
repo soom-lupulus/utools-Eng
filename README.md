@@ -1,0 +1,1 @@
+# 执行 npx babel --watch src --out-dir . --presets react-app/prod 自动转换jsx
