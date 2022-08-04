@@ -3,7 +3,8 @@ const cheerio = require("cheerio");
 const fs = require("fs");
 
 class Spider {
-  index = 1;
+  index = 363;
+  lastIndex = 363;
   baseUrl =
     "https://voa-story.com/category/%E5%AD%A6%E4%B8%AA%E8%AF%8D-learn-a-word/page/";
   arr = [];
@@ -59,11 +60,11 @@ const start = () => {
   s.grabData().then((html) => {
     s.parseHtml(html);
     console.log("第" + s.index + "页完成");
-    if (s.index < 363) {
+    if (s.index < s.lastIndex) {
       s.index++;
       start();
     } else {
-      s.saveIt("spider/data/names.json", s.arr);
+      s.saveIt(`spider/data/names${s.index}.json`, s.arr);
       console.log("Ok");
     }
   });

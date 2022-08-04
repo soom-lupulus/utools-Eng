@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "start": "npx babel --watch src --out-dir dist --presets react-app/prod"
+  },
   "dependencies": {
     "axios": "^0.27.2",
     "babel-cli": "6",

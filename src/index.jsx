@@ -11,7 +11,7 @@ const App = () => {
       <div className="absolute top-0">
         <img src={url} />
       </div>
-      <div className="filter blur-lg w-4/5 h-2/5 absolute top-0 bottom-0 left-0 right-0 m-auto flex flex-col justify-between items-center">
+      <div className=" w-4/5 h-2/5 absolute top-0 bottom-0 left-0 right-0 m-auto flex flex-col justify-between items-center">
         <div className="text-7xl">pass out</div>
         <div className="text-xl">
           今天我们要学的词是 pass out. To pass out 意思是失去知觉。A pilot who

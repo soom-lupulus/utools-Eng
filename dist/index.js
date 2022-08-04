@@ -21,7 +21,7 @@ var App = function App() {
     ),
     React.createElement(
       "div",
-      { className: "filter blur-lg w-4/5 h-2/5 absolute top-0 bottom-0 left-0 right-0 m-auto flex flex-col justify-between items-center" },
+      { className: " w-4/5 h-2/5 absolute top-0 bottom-0 left-0 right-0 m-auto flex flex-col justify-between items-center" },
       React.createElement(
         "div",
         { className: "text-7xl" },
