@@ -3,9 +3,16 @@
 	"logo": "logo.png",
 	"features": [
 		{
-		  "code": "hello",
-		  "explain": "hello world",
-			"cmds":["ygg", "你好"]
+			"code": "hello",
+			"explain": "hello world",
+			"cmds": [
+				"ygg",
+				"你好"
+			]
 		}
-	]
+	],
+	"preload": "preload.js",
+	"development": {
+		"main": "http://172.25.240.148:5500/index.html"
+	}
 }

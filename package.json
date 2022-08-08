@@ -11,9 +11,5 @@
     "babel-cli": "6",
     "babel-preset-react-app": "3",
     "cheerio": "^1.0.0-rc.12"
-  },
-  "preload": "preload.js",
-  "development": {
-    "main": "http://172.25.240.148:5500/index.html"
   }
 }

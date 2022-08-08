@@ -1,4 +1,4 @@
- // 开发者可以暴露自定义 API 供后加载脚本使用
+// 开发者可以暴露自定义 API 供后加载脚本使用
 
 // preload.js 中使用 nodejs
 const { readFileSync } = require('fs')
