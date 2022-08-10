@@ -6,10 +6,11 @@
 .outer .img-wrapper {
   position: absolute;
   top: 0%;
+  z-index: -100;
 }
 .outer .content-wrapper {
   width: 80vw;
-  height: 40vh;
+  height: 60vh;
   position: absolute;
   top: 0%;
   bottom: 0%;
@@ -20,9 +21,19 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: coral;
-  border: 1px solid transparent;
+  border: 1px solid #000000;
   border-radius: 20px;
+}
+.outer .content-wrapper ::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: hsla(0, 0%, 100%, 0.5);
+  filter: blur(20px);
+  z-index: -1;
 }
 .outer .content-wrapper h1 {
   font-size: 3rem;
