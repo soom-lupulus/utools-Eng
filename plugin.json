@@ -11,8 +11,5 @@
 			]
 		}
 	],
-	"preload": "preload.js",
-	"development": {
-		"main": "http://172.25.240.148:5500/index.html"
-	}
+	"preload": "preload.js"
 }

@@ -3,7 +3,6 @@ const App = () => {
   const [dbData, setDbdata] = React.useState({});
   const [imgUrl, setImgUrl] = React.useState(``);
   React.useEffect(() => {
-    console.log(utools);
     // 获取每日图片
     fetch("http://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1")
       .then((res) => {
@@ -13,14 +12,34 @@ const App = () => {
         const url = "http://bing.com" + res.images[0].url;
         setImgUrl(url);
       });
+
     // 写数据
-    const doc = utools.db.get(DOCID);
-    if (!doc) {
-    }
 
     utools.onPluginReady(() => {
-      console.log(66);
-      console.log(readConfig);
+      const doc = utools.db.get(DOCID);
+      if (!doc) {
+        // 获取数据
+        const dataArr = readConfig();
+        console.log(dataArr);
+        // 创建
+        const { rev, ok, id } = utools.db.put({
+          _id: DOCID,
+          data: dataArr,
+        });
+        if (ok) {
+          console.log("数据库创建成功, id为" + id);
+          console.log(rev);
+          // 存储rev
+          utools.dbStorage.setItem("eng_rev", rev);
+        } else {
+          console.log("数据库创建失败");
+        }
+      } else {
+        // 判断文档是否要更新（todo）
+        console.log("已经有数据了,你看");
+        const data = utools.get(DOCID);
+        console.log(data);
+      }
     });
   }, []);
 

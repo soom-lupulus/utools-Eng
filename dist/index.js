@@ -13,7 +13,6 @@ var App = function App() {
       setImgUrl = _React$useState4[1];
 
   React.useEffect(function () {
-    console.log(utools);
     // 获取每日图片
     fetch("http://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1").then(function (res) {
       return res.json();
@@ -21,13 +20,39 @@ var App = function App() {
       var url = "http://bing.com" + res.images[0].url;
       setImgUrl(url);
     });
+
     // 写数据
-    var doc = utools.db.get(DOCID);
-    if (!doc) {}
 
     utools.onPluginReady(function () {
-      console.log(66);
-      console.log(readConfig);
+      var doc = utools.db.get(DOCID);
+      if (!doc) {
+        // 获取数据
+        var dataArr = readConfig();
+        console.log(dataArr);
+        // 创建
+
+        var _utools$db$put = utools.db.put({
+          _id: DOCID,
+          data: dataArr
+        }),
+            rev = _utools$db$put.rev,
+            ok = _utools$db$put.ok,
+            id = _utools$db$put.id;
+
+        if (ok) {
+          console.log("数据库创建成功, id为" + id);
+          console.log(rev);
+          // 存储rev
+          utools.dbStorage.setItem("eng_rev", rev);
+        } else {
+          console.log("数据库创建失败");
+        }
+      } else {
+        // 判断文档是否要更新（todo）
+        console.log("已经有数据了,你看");
+        var data = utools.get(DOCID);
+        console.log(data);
+      }
     });
   }, []);
 
