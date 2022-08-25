@@ -60,6 +60,10 @@ var App = function App() {
 
   // 写数据
   utools.onPluginReady(function () {
+    // 添加监听
+    window.onresize = function (e) {
+      document.documentElement.style.fontSize = innerHeight / 60 + "px";
+    };
     // 获取数据
     var dataArr = readConfig();
     var dataObj = {
@@ -76,7 +80,7 @@ var App = function App() {
     });
   });
 
-  var getDaliyImg = function getDaliyImg() {
+  var getDailyImg = function getDailyImg() {
     // 获取每日图片
     fetch("http://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1").then(function (res) {
       return res.json();
@@ -86,12 +90,12 @@ var App = function App() {
     });
   };
   React.useEffect(function () {
-    getDaliyImg();
+    getDailyImg();
 
     var _utools$db$get = utools.db.get(DOCID + "/oneword/page1"),
         page1Data = _utools$db$get.data;
 
-    var todayWord = page1Data[3];
+    var todayWord = page1Data[4];
     setInfo(todayWord);
   }, []);
 
