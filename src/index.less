@@ -6,10 +6,14 @@
     position: absolute;
     top: 0%;
     z-index: -100;
+    img{
+      width: 100vw;
+      height: 100vh;
+    }
   }
   .content-wrapper {
     width: 80vw;
-    height: 60vh;
+    height: max-content;
     position: absolute;
     top: 0%;
     bottom: 0%;
@@ -20,9 +24,10 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    // background: coral;
-    border: 1px solid #000000;
-    border-radius: 20px;
+    border: 40px solid transparent;
+    border-image: url(https://file.aisoutu.com/cunchu2/0000000000/taotu_img/big_40863ede9a06a1dcaf5d6764bc28270d.webp);
+    border-image-slice: 100%;
+    border-image-width: 80px;
     ::before {
       content: "";
       position: absolute;
@@ -30,7 +35,6 @@
       bottom: 0;
       left: 0;
       right: 0;
-      // background: rgba(255, 0, 0, .5);
       background: hsla(0, 0%, 100%, 0.5);
       filter: blur(20px);
       z-index: -1;
@@ -39,10 +43,15 @@
       font-size: 3rem;
     }
     article {
+      max-height: 100%;
       font-size: 1.5rem;
-      padding: 0 10rem;
+      padding: 0 6rem;
+      display: flex;
+      flex-direction: column;
       p{
         // text-indent: 1.5rem;
+        margin: 0;
+        padding: 1rem 0;
       }
     }
   }
