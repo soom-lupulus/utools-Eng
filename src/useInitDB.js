@@ -1,6 +1,15 @@
 import { DOCID } from "../config/index.js";
 
-export const useInitDB = () => {
+const removeRevFromDBStorage = (doc_id) => {
+  const { ok } = utools.db.remove(doc_id);
+  if (ok) {
+    utools.dbStorage.removeItem("eng_rev");
+    // console.log("删除了" + doc_id);
+  }
+};
+
+export const useInitDB = (callback) => {
+
   const initData = (doc_id, data) => {
     const doc = utools.db.get(doc_id);
     // 新用户就新建数据库
@@ -11,29 +20,30 @@ export const useInitDB = () => {
         data,
       });
       if (ok) {
-        console.log("数据库创建成功, id为" + id);
+        // console.log("数据库创建成功, id为" + id);
         // 存储rev
         utools.dbStorage.setItem(doc_id + "_rev", rev);
       } else {
-        console.log("数据库创建失败");
+        // console.log("数据库创建失败");
       }
     }
     // 否则就更新数据或者什么都不做
     else {
       // 判断文档是否要更新（todo）
-      console.log(doc_id + "已经有数据了");
+      // console.log(doc_id + "已经有数据了");
     }
   };
 
   // 写数据
-  utools.onPluginReady(() => {
-    // 添加监听
+  utools.onPluginEnter(() => {
     document.documentElement.style.fontSize = 9 + "px";
+    // 添加监听
     window.onresize = function (e) {
       document.documentElement.style.fontSize = innerHeight / 60 + "px";
     };
     // 获取数据
     const dataArr = readConfig();
+    // 分割数据
     const dataObj = {
       page1: dataArr.slice(0, 500),
       page2: dataArr.slice(500, 1000),
@@ -45,7 +55,9 @@ export const useInitDB = () => {
     };
     Object.keys(dataObj).forEach((item) => {
       initData(`${DOCID}/oneword/${item}`, dataObj[item]);
+      // removeRevFromDBStorage(`${DOCID}/oneword/${item}`)
     });
+    callback()
   });
 };
 

@@ -5,27 +5,6 @@ dayjs.extend(window.dayjs_plugin_calendar);
 dayjs.extend(window.dayjs_plugin_duration);
 
 const App = () => {
-  useInitDB();
-  const [info, setInfo] = React.useState({});
-  const [imgUrl, setImgUrl] = React.useState(``);
-
-  const removeRevFromDBStorage = (DOCID) => {
-    const { ok } = utools.db.remove(DOCID);
-    if (ok) {
-      utools.dbStorage.removeItem("eng_rev");
-      console.log("删除了");
-    }
-  };
-
-  // 处理文章分段
-  const splitArticle = React.useMemo(() => {
-    if (info.article) {
-      const sArr = info.article.split("。");
-      return sArr;
-    }
-    return [];
-  }, [info]);
-
   // 获取每日背景图片
   const getDailyImg = () => {
     // 获取每日图片
@@ -40,23 +19,40 @@ const App = () => {
   };
   // 根据日期获取每日句子
   const getDailySentence = () => {
-    console.log("来了");
     // 起始日期设定为2022.8.27
     const start = dayjs("2022-08-27");
     const today = dayjs().format("YYYY-MM-DD");
     const end = dayjs(today);
     // 间隔日为下标
     let index = end.diff(start, "day");
-    console.log(index);
+    // console.log(index);
     // 从数据库取数据
-    if(index < 0) index = 0;
-    const { data: pageData } = utools.db.get(`${DOCID}/oneword/page${Math.ceil((index + 1 ) / 500)}`);
-    const todayWord = pageData[index];
-    setInfo(todayWord);
+    if (index < 0) index = 0;
+    const pageData = utools.db.get(
+      `${DOCID}/oneword/page${Math.ceil((index + 1) / 500)}`
+    );
+    if (!pageData) {
+      setInfo({ title: "暂无数据" });
+    } else {
+      const todayWord = pageData.data[index];
+      setInfo(todayWord);
+    }
   };
+  useInitDB(getDailySentence);
+  const [info, setInfo] = React.useState({});
+  const [imgUrl, setImgUrl] = React.useState(``);
+
+  // 处理文章分段
+  const splitArticle = React.useMemo(() => {
+    if (info.article) {
+      const sArr = info.article.split("。");
+      return sArr;
+    }
+    return [];
+  }, [info]);
+
   React.useEffect(() => {
     getDailyImg();
-    getDailySentence();
   }, []);
 
   return (

@@ -7,37 +7,6 @@ dayjs.extend(window.dayjs_plugin_calendar);
 dayjs.extend(window.dayjs_plugin_duration);
 
 var App = function App() {
-  useInitDB();
-
-  var _React$useState = React.useState({}),
-      _React$useState2 = _slicedToArray(_React$useState, 2),
-      info = _React$useState2[0],
-      setInfo = _React$useState2[1];
-
-  var _React$useState3 = React.useState(""),
-      _React$useState4 = _slicedToArray(_React$useState3, 2),
-      imgUrl = _React$useState4[0],
-      setImgUrl = _React$useState4[1];
-
-  var removeRevFromDBStorage = function removeRevFromDBStorage(DOCID) {
-    var _utools$db$remove = utools.db.remove(DOCID),
-        ok = _utools$db$remove.ok;
-
-    if (ok) {
-      utools.dbStorage.removeItem("eng_rev");
-      console.log("删除了");
-    }
-  };
-
-  // 处理文章分段
-  var splitArticle = React.useMemo(function () {
-    if (info.article) {
-      var sArr = info.article.split("。");
-      return sArr;
-    }
-    return [];
-  }, [info]);
-
   // 获取每日背景图片
   var getDailyImg = function getDailyImg() {
     // 获取每日图片
@@ -50,26 +19,48 @@ var App = function App() {
   };
   // 根据日期获取每日句子
   var getDailySentence = function getDailySentence() {
-    console.log("来了");
     // 起始日期设定为2022.8.27
     var start = dayjs("2022-08-27");
     var today = dayjs().format("YYYY-MM-DD");
     var end = dayjs(today);
     // 间隔日为下标
     var index = end.diff(start, "day");
-    console.log(index);
+    // console.log(index);
     // 从数据库取数据
     if (index < 0) index = 0;
-
-    var _utools$db$get = utools.db.get(DOCID + "/oneword/page" + Math.ceil((index + 1) / 500)),
-        pageData = _utools$db$get.data;
-
-    var todayWord = pageData[index];
-    setInfo(todayWord);
+    var pageData = utools.db.get(DOCID + "/oneword/page" + Math.ceil((index + 1) / 500));
+    if (!pageData) {
+      setInfo({ title: "暂无数据" });
+    } else {
+      var todayWord = pageData.data[index];
+      setInfo(todayWord);
+    }
   };
+  useInitDB(getDailySentence);
+
+  var _React$useState = React.useState({}),
+      _React$useState2 = _slicedToArray(_React$useState, 2),
+      info = _React$useState2[0],
+      setInfo = _React$useState2[1];
+
+  var _React$useState3 = React.useState(""),
+      _React$useState4 = _slicedToArray(_React$useState3, 2),
+      imgUrl = _React$useState4[0],
+      setImgUrl = _React$useState4[1];
+
+  // 处理文章分段
+
+
+  var splitArticle = React.useMemo(function () {
+    if (info.article) {
+      var sArr = info.article.split("。");
+      return sArr;
+    }
+    return [];
+  }, [info]);
+
   React.useEffect(function () {
     getDailyImg();
-    getDailySentence();
   }, []);
 
   return React.createElement(

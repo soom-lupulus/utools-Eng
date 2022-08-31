@@ -4,10 +4,11 @@
 	"features": [
 		{
 			"code": "hello",
-			"explain": "hello world",
+			"explain": "每日美语",
 			"cmds": [
 				"ygg",
-				"你好"
+				"美语",
+				"my"
 			]
 		}
 	],
